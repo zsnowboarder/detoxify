@@ -72,7 +72,7 @@ new_text = st.text_area("Enter your text for analysis", value="I am going to get
 df_new_text = pd.DataFrame({"text":[new_text]})
 
 df = pd.DataFrame(web_text)
-df = df.append(df_new_text, ignore_index=True)
+df = pd.concat([df, df_new_text], ignore_index=True)
 
 
 # In[113]:
