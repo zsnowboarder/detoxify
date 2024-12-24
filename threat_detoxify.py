@@ -65,14 +65,15 @@ for text in texts:
 # 
 
 # In[13]:
-df = pd.DataFrame(web_text)
-df = pd.concat([df, df_new_text], ignore_index=True)
 
 st.title("Threat and Sentiment Detection")
 new_text = st.text_area("Enter your text for analysis", value="I am going to get a gun and shoot people at all schools.")
 df_new_text = pd.DataFrame({"text":[new_text]})
+df = pd.DataFrame(web_text)
+
 # create a st button
 if st.button("Analyze"):
+    df = pd.concat([df, df_new_text], ignore_index=True) #add new text for analysis
     df["toxicity"] = df["text"].apply(analyze)
     df_scores = pd.DataFrame(scores)
     # VaderSentiment Analysis
@@ -98,6 +99,7 @@ if st.button("Analyze"):
     df = pd.concat([df, df_scores, df_vs], axis=1)
     df = df[["text", "vs_score", "Detected Threat"]]
     st.table(df)
+
 
 # In[ ]:
 
