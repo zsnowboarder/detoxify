@@ -69,6 +69,7 @@ for text in texts:
 st.title("Threat and Sentiment Detection")
 new_text = st.text_area("Enter your text for analysis", value="I am going to get a gun and shoot people at all schools.")
 df_new_text = pd.DataFrame({"text":[new_text]})
+st.write("This demo retrieves news articles from CTV News and analyses the content. Your text will be added to the dataset for analysis.")
 df = pd.DataFrame(web_text)
 
 # create a st button
@@ -97,9 +98,9 @@ if st.button("Analyze"):
     df_scores["Detected Threat"] = df_scores["sum_threat"].apply(map_sum_threat)
     
     df = pd.concat([df, df_scores, df_vs], axis=1)
-    df = df[["text", "vs_score", "Detected Threat"]]
+    df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
+    df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
-
 
 # In[ ]:
 
