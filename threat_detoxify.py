@@ -65,55 +65,39 @@ for text in texts:
 # 
 
 # In[13]:
-
+df = pd.DataFrame(web_text)
+df = pd.concat([df, df_new_text], ignore_index=True)
 
 st.title("Threat and Sentiment Detection")
 new_text = st.text_area("Enter your text for analysis", value="I am going to get a gun and shoot people at all schools.")
 df_new_text = pd.DataFrame({"text":[new_text]})
-
-df = pd.DataFrame(web_text)
-df = pd.concat([df, df_new_text], ignore_index=True)
-
-
-# In[15]:
-
-
-df["toxicity"] = df["text"].apply(analyze)
-df_scores = pd.DataFrame(scores)
-
-
-# In[17]:
-
-
-# VaderSentiment Analysis
-array_dicts = []
-array_pred = []
-
-for row_index, row in df.iterrows():
-    analyzer = SentimentIntensityAnalyzer()
-    vs = analyzer.polarity_scores(row["text"])
-    array_dicts.append(vs)
-    if vs["compound"] < 0:
-        array_pred.append("Negative")
-    elif vs["compound"] > 0:
-        array_pred.append("Positive")
-    else:
-        array_pred.append("Neutral")
-df_vs = pd.DataFrame(array_dicts)
-df_vs["vs_score"] = array_pred
-
-df_scores["sum_threat"] = df_scores[["toxicity", "severe_toxicity", "threat"]].sum(axis=1)
-df_scores["Detected Threat"] = df_scores["sum_threat"].apply(map_sum_threat)
-
-df = pd.concat([df, df_scores, df_vs], axis=1)
-
-
-# In[19]:
-
-
-df = df[["text", "vs_score", "Detected Threat"]]
-st.table(df)
-
+# create a st button
+if st.button("Analyze"):
+    df["toxicity"] = df["text"].apply(analyze)
+    df_scores = pd.DataFrame(scores)
+    # VaderSentiment Analysis
+    array_dicts = []
+    array_pred = []
+    
+    for row_index, row in df.iterrows():
+        analyzer = SentimentIntensityAnalyzer()
+        vs = analyzer.polarity_scores(row["text"])
+        array_dicts.append(vs)
+        if vs["compound"] < 0:
+            array_pred.append("Negative")
+        elif vs["compound"] > 0:
+            array_pred.append("Positive")
+        else:
+            array_pred.append("Neutral")
+    df_vs = pd.DataFrame(array_dicts)
+    df_vs["vs_score"] = array_pred
+    
+    df_scores["sum_threat"] = df_scores[["toxicity", "severe_toxicity", "threat"]].sum(axis=1)
+    df_scores["Detected Threat"] = df_scores["sum_threat"].apply(map_sum_threat)
+    
+    df = pd.concat([df, df_scores, df_vs], axis=1)
+    df = df[["text", "vs_score", "Detected Threat"]]
+    st.table(df)
 
 # In[ ]:
 
