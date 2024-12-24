@@ -35,9 +35,9 @@ def analyze(text):
     return results
 
 def map_sum_threat(value):
-    if value < 0.05:
+    if value < 0.02:
         return "None detected"
-    elif value >= 0.05 and value < 0.4:
+    elif value >= 0.02 and value < 0.4:
         return "Low"
     elif value >= 0.4 and value < 0.6:
         return "Medium"
