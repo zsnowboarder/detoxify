@@ -67,10 +67,11 @@ for text in texts:
 # In[13]:
 
 
+
 st.title("Threat and Sentiment Detection")
 new_text = st.text_area("Enter your text for analysis", value="I am going to get a gun and shoot people at all schools.")
 df_new_text = pd.DataFrame({"text":[new_text]})
-st.write("This demo retrieves the latest news articles from CTV News and analyses the content. Your text will be added to the dataset for analysis. This can be used to monitor specific user account with API.")
+st.write("This demo retrieves the latest news articles from CTV News and analyses the content. Your text will be added to the dataset for analysis. This concept can be used to monitor threats for specific user account using an API.")
 df = pd.DataFrame(web_text)
 
 # create a st button
@@ -102,6 +103,7 @@ if st.button("Analyze"):
     df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
     df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
+
 
 
 # In[ ]:
