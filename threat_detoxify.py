@@ -7,7 +7,7 @@
 #pip install detoxify
 
 
-# In[142]:
+# In[9]:
 
 
 # Import the Detoxify library
@@ -46,7 +46,7 @@ def map_sum_threat(value):
     
 
 
-# In[132]:
+# In[10]:
 
 
 # get the data from internet
@@ -64,7 +64,7 @@ for text in texts:
 # df = pd.DataFrame(data)
 # 
 
-# In[111]:
+# In[13]:
 
 
 st.title("Threat and Sentiment Detection")
@@ -75,13 +75,14 @@ df = pd.DataFrame(web_text)
 df = pd.concat([df, df_new_text], ignore_index=True)
 
 
-# In[113]:
+# In[15]:
 
 
 df["toxicity"] = df["text"].apply(analyze)
+df_scores = pd.DataFrame(scores)
 
 
-# In[152]:
+# In[17]:
 
 
 # VaderSentiment Analysis
@@ -107,7 +108,7 @@ df_scores["Detected Threat"] = df_scores["sum_threat"].apply(map_sum_threat)
 df = pd.concat([df, df_scores, df_vs], axis=1)
 
 
-# In[154]:
+# In[19]:
 
 
 df = df[["text", "vs_score", "Detected Threat"]]
