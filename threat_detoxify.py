@@ -99,7 +99,7 @@ if st.button("Analyze"):
     
     df = pd.concat([df, df_scores, df_vs], axis=1)
     df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
-    df.sort_values(by="sum_threat", ascending=False)
+    df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
 
 # In[ ]:
