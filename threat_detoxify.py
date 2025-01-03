@@ -7,7 +7,7 @@
 #pip install detoxify
 
 
-# In[9]:
+# In[23]:
 
 
 # Import the Detoxify library
@@ -46,7 +46,7 @@ def map_sum_threat(value):
     
 
 
-# In[10]:
+# In[24]:
 
 
 # get the data from internet
@@ -58,14 +58,16 @@ for text in texts:
     if sy:
         web_text.append({'text':sy.get_text()})
 
+# get only 10 entries
+web_text = web_text[:9]
+
 
 # # load the data. use this when no Internet data
 # data = { 'text': [ "You are a terrible person and I hate you.", "Have a great day!", "I can't believe you did that, you idiot." ] }
 # df = pd.DataFrame(data)
 # 
 
-# In[13]:
-
+# In[28]:
 
 
 st.title("Threat and Sentiment Detection")
@@ -103,6 +105,11 @@ if st.button("Analyze"):
     df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
     df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
+
+
+# In[30]:
+
+
 
 
 
