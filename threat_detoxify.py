@@ -105,7 +105,6 @@ if st.button("Analyze"):
     df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
     df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
-    st.cache_data.clear() #clear streamlit cache
 
 
 # In[30]:
