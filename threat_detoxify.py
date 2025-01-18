@@ -30,6 +30,19 @@ model = Detoxify('original')
 scores = []
 
 @st.cache_data
+def get_data():
+    #get data from ctvnews
+    url = "https://www.ctvnews.ca/"
+    response = requests.get(url)
+    bs = BeautifulSoup(response.content, "html.parser")
+    web_text = []
+    for article in bs.find_all('article', class_='c-stack b-simple-list-custom__item'):
+        heading = article.find('h3', class_='c-heading')
+        if heading:
+            web_text.append({'text':heading.get_text()})
+    return web_text[:9]
+    
+@st.cache_data
 def analyze(text):
     results = model.predict(text)
     scores.append(results)
@@ -49,20 +62,6 @@ def map_sum_threat(value):
 
 # In[24]:
 
-
-
-# get the data from internet
-web_text = []
-for article in bs.find_all('article', class_='c-stack b-simple-list-custom__item'):
-    heading = article.find('h3', class_='c-heading')
-    time = article.find('time', class_='c-elapsed-time')
-    if heading:
-        web_text.append({'text':heading.get_text()})
-
-# get only 10 entries
-web_text = web_text[:9]
-
-
 # # load the data. use this when no Internet data
 # data = { 'text': [ "You are a terrible person and I hate you.", "Have a great day!", "I can't believe you did that, you idiot." ] }
 # df = pd.DataFrame(data)
@@ -70,6 +69,7 @@ web_text = web_text[:9]
 
 # In[28]:
 
+web_text = get_data()
 
 st.title("Threat and Sentiment Detection")
 new_text = st.text_area("Enter your text for analysis", value="I am going to get a gun and shoot people at all schools.")
