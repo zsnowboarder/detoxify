@@ -51,7 +51,7 @@ def map_sum_threat(value):
 
 
 # get the data from internet
-web_text[]
+web_text = []
 for article in bs.find_all('article', class_='c-stack b-simple-list-custom__item'):
     heading = article.find('h3', class_='c-heading')
     time = article.find('time', class_='c-elapsed-time')
