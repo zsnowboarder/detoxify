@@ -32,7 +32,7 @@ scores = []
 def load_detoxify():
     # Create an instance of the Detoxify model
     return Detoxify('original')
-model = detoxify()
+model = load_detoxify()
 
 @st.cache_data
 def get_data():
