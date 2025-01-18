@@ -23,11 +23,16 @@ url = "https://www.ctvnews.ca/"
 response = requests.get(url)
 bs = BeautifulSoup(response.content, "html.parser")
 
-# Create an instance of the Detoxify model
-model = Detoxify('original')
+
 
 # init dict
 scores = []
+
+@st.cache_resource
+def load_detoxify():
+    # Create an instance of the Detoxify model
+    return Detoxify('original')
+model = load_model()
 
 @st.cache_data
 def get_data():
