@@ -49,14 +49,14 @@ def map_sum_threat(value):
 # In[24]:
 
 
-# get the data from internet
-texts = bs.find_all('div', class_='c-list__item__text')
-web_text = []
 
-for text in texts:
-    sy = text.find('p', class_='c-list__item__description')
-    if sy:
-        web_text.append({'text':sy.get_text()})
+# get the data from internet
+web_text[]
+for article in bs.find_all('article', class_='c-stack b-simple-list-custom__item'):
+    heading = article.find('h3', class_='c-heading')
+    time = article.find('time', class_='c-elapsed-time')
+    if heading:
+        web_text.append({'text':heading.get_text()})
 
 # get only 10 entries
 web_text = web_text[:9]
@@ -105,7 +105,7 @@ if st.button("Analyze"):
     df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
     df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
-
+    st.cache_data.clear()
 
 # In[30]:
 
