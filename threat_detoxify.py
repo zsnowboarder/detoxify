@@ -29,6 +29,7 @@ model = Detoxify('original')
 # init dict
 scores = []
 
+@st.cache_data
 def analyze(text):
     results = model.predict(text)
     scores.append(results)
@@ -106,6 +107,8 @@ if st.button("Analyze"):
     df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
     st.cache_data.clear()
+    st.cache_resource.clear()
+
 
 # In[30]:
 
