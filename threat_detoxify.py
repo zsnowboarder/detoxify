@@ -28,13 +28,13 @@ bs = BeautifulSoup(response.content, "html.parser")
 # init dict
 scores = []
 
-@st.cache_resource
+
 def load_detoxify():
     # Create an instance of the Detoxify model
     return Detoxify('original')
 model = load_detoxify()
 
-@st.cache_data
+
 def get_data():
     #get data from ctvnews
     url = "https://www.ctvnews.ca/"
@@ -47,7 +47,7 @@ def get_data():
             web_text.append({'text':heading.get_text()})
     return web_text[:9]
     
-@st.cache_data
+
 def analyze(text):
     results = model.predict(text)
     scores.append(results)
@@ -111,8 +111,7 @@ if st.button("Analyze"):
     df = df[["text", "vs_score", "Detected Threat", "sum_threat"]]
     df = df.sort_values(by="sum_threat", ascending=False)
     st.table(df)
-    st.cache_data.clear()
-    st.cache_resource.clear()
+
 
 
 # In[30]:
